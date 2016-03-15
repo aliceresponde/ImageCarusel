@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.android.slidepager.MainActivity"
+    android:background="@android:color/holo_blue_dark"
+    >
+
+  <android.support.v4.view.ViewPager
+      android:id="@+id/viewPager_images"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_above="@+id/button">
+  </android.support.v4.view.ViewPager>
+
+  <com.viewpagerindicator.CirclePageIndicator
+      android:id="@+id/pageIndicator"
+      android:layout_height="wrap_content"
+      android:layout_width="fill_parent"
+      android:layout_above="@+id/button"
+      android:padding="4dp"
+      app:fillColor="@color/colorPrimary"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"/>
+
+  <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Login"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:id="@+id/button"/>
+
+</RelativeLayout>
