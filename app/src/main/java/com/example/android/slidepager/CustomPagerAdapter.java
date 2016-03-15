@@ -1,9 +1,11 @@
 package com.example.android.slidepager;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -90,13 +92,13 @@ public class CustomPagerAdapter extends PagerAdapter {
   @Override public Object instantiateItem(ViewGroup container, int position) {
 
     View item_view =mLayoutInflater.inflate(R.layout.item_carousel, container, false);
-    ImageView imageViewPhoto = (ImageView) item_view.findViewById(R.id.imageV_photo);
+    ImageView imageViewhoto = (ImageView) item_view.findViewById(R.id.imageV_photo);
     //imageViewPhoto.setImageResource(animals[position]);
 
     Log.d("itle", mTitles[position] + "         posss:" +position);
 
     try {
-      new ImageLoadTask(mResources_url[position], imageViewPhoto).execute();
+      new ImageLoadTask(mResources_url[position], imageViewhoto ,context).execute();
     }catch (Exception e){
       Log.e("Error" , e.getMessage());
     }
@@ -113,13 +115,24 @@ public class CustomPagerAdapter extends PagerAdapter {
    * Load ImageView from URL , downloading it by internet
    */
   private class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
+    private Context context;
     private String url;
     private ImageView imageView;
+    private Dialog dialog;
 
-    public ImageLoadTask(String url, ImageView imageView) {
+    public ImageLoadTask(String url, ImageView imageView ,Context context) {
       this.url = url; this.imageView = imageView;
+      this.context=context;
+      dialog = new Dialog(context);
+      dialog.setTitle("Loading");
+      dialog.setCancelable(false);
+
     }
 
+    @Override protected void onPreExecute() {
+      super.onPreExecute();
+      dialog.show();
+    }
 
     @Override protected Bitmap doInBackground(Void... params) {
       try {
@@ -135,6 +148,7 @@ public class CustomPagerAdapter extends PagerAdapter {
 
     @Override protected void onPostExecute(Bitmap result) {
       super.onPostExecute(result);
+      dialog.dismiss();
       imageView.setImageBitmap(result);
     }
   }
